@@ -1,0 +1,26 @@
+{
+  "name": "scheduler_interface",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "shayuna",
+  "license": "MIT",
+  "dependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "path": "^0.12.7",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "webpack": "^4.12.0",
+    "webpack-cli": "^3.0.8"
+  },
+  "scripts": {
+    "build": "webpack --watch"
+  },
+  "devDependencies": {
+    "webpack-dev-server": "^3.1.4"
+  }
+}
