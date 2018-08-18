@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import RunningMessages from "./RunningMessages";
+import Questions from "./Questions";
 import '../styles/index.scss';
 
 export default class App extends Component {
@@ -14,7 +15,7 @@ export default class App extends Component {
         return (
             <div className="font1">
                 {this.state.mode==="prologue" && <RunningMessages type="prologue" setAppState={this.setAppState}/>}
-                {this.state.mode==="questions" && <div>here should be the questions section god damn it</div>}
+                {this.state.mode==="questions" && <Questions setAppState={this.setAppState}/>}
                 {this.state.mode==="epilogue" && <RunningMessages type="epilogue" setAppState={this.setAppState}/>}
             </div>
         );

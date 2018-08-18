@@ -9,13 +9,10 @@ html, body {
 body,html {
     margin: 0;
     background-color: $color-white;
-    color: $color-purple;
+    color: $color-black;
     font-family: 'Lato', sans-serif;
-    font-size: 14px;
+    font-size: 1em;
     direction:rtl;
-}
-.font1{
-    font-size:2em;
 }
 .center{
     width:100vw;
@@ -26,4 +23,13 @@ body,html {
     flex-direction:column;
     justify-content: space-around;
     text-align:center;
+}
+.btn{
+    font-size:1.2em;
+    color:blue;
+    background-color:yellow;
+}
+.msg,.question{
+    color: $color-purple;
+    font-size:2em;
 }

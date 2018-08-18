@@ -29,8 +29,8 @@ export default class RunningMessages extends React.Component{
     render(){
         return (
             <div className="center">
-                {this.state.messages[this.state.current]}
-                {this.state.messages.length>0 && <div><button onClick={this.next}>הלאה מכאן</button></div>}
+                <div className="msg">{this.state.messages[this.state.current]}</div>
+                {this.state.messages.length>0 && <div><button className="btn" onClick={this.next}>הלאה מכאן</button></div>}
             </div>
         )
     }
@@ -40,7 +40,7 @@ export default class RunningMessages extends React.Component{
                 current:prevState.current+1
             }))
         }else{
-            this.props.setAppState("questions");
+            if (this.props.type==="prologue")this.props.setAppState("questions");
         }
     }
 }
