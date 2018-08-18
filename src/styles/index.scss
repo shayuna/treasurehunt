@@ -6,10 +6,24 @@ html, body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-body {
+body,html {
     margin: 0;
-    background-color: $color-dark;
-    color: $color-steel-grey;
+    background-color: $color-white;
+    color: $color-purple;
     font-family: 'Lato', sans-serif;
     font-size: 14px;
+    direction:rtl;
+}
+.font1{
+    font-size:2em;
+}
+.center{
+    width:100vw;
+    height:100vh;
+    display:flex;
+    padding:2em;
+    box-sizing:border-box;
+    flex-direction:column;
+    justify-content: space-around;
+    text-align:center;
 }
