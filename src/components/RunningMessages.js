@@ -27,12 +27,26 @@ export default class RunningMessages extends React.Component{
         })
     }
     render(){
-        return (
-            <div className="center">
-                <div className="msg">{this.state.messages[this.state.current]}</div>
-                {this.state.messages.length>0 && <div><button className="btn" onClick={this.next}>הלאה מכאן</button></div>}
-            </div>
-        )
+        if (this.state.messages[this.state.current] && this.state.messages[this.state.current].indexOf("/images/")===-1){
+            return (
+                <div className="center fullBGSize runningMessagesWrapper">
+                    <div className="msg">{this.state.messages[this.state.current]}</div>
+                    {this.state.messages.length>0 && <div><button className="btn" onClick={this.next}>Next Please</button></div>}
+                </div>
+            )
+        }
+        else if (this.state.messages[this.state.current]){
+            return (
+                <div className="center fullBGSize" style={{backgroundImage:"url("+this.state.messages[this.state.current]+")"}}>
+                    {this.state.messages.length>0 && <div><button className="btn bottomMe" onClick={this.next}>Next Please</button></div>}
+                </div>
+            )
+        }
+        else{
+            return (
+                <div></div>
+            )
+        }
     }
     next(){
         if (this.state.current+1<this.state.messages.length){

@@ -37,22 +37,37 @@ export default class Questions extends React.Component{
     render(){
         return (
             <div>
-                {this.state.questions.length>0 && this.state.show==="question" && <div className="center">
-                    <div className="question">{this.state.questions[this.state.current].question}</div>
-                    <div><input type="text" className="answer"/></div>
+                {this.state.questions.length>0 && this.state.show==="question" && <div className="center questionWrapper fullBGSize">
+                    <div className="question">
+                    {
+                        this.state.questions[this.state.current].question.split("||").map ((itm,ii)=>
+                                <div key={ii}>{itm}</div>
+                        )
+                    }
+                    </div>
+                    <div className="centerMe"><input type="text" className="answer"/></div>
                     <div>
-                        <button className="btn" onClick={this.answer}>יש לי תשובה</button>
+                        <button className="btn" onClick={this.answer}>אני אני אני אני</button>
                         {this.state.numberOfWrongAnswers>1 && <button className="btn" onClick={this.showHint}>מוכן לרמז {this.state.currentHint+1}</button>}
                     </div>
                 </div>}
                 {this.state.show==="hint" && 
-                    <div className="center">
-                        <div className="hint">{this.state.questions[this.state.current].hints[this.state.currentHint]}</div>
+                    <div className="center hintWrapper fullBGSize">
+                        {this.state.questions[this.state.current].hints[this.state.currentHint].indexOf("/images/")===-1 && <div className="hint">{this.state.questions[this.state.current].hints[this.state.currentHint]}</div>}
+                        {this.state.questions[this.state.current].hints[this.state.currentHint].indexOf("/images/")>-1 && <div className="hint img" style={{backgroundImage:"url("+this.state.questions[this.state.current].hints[this.state.currentHint]+")" }}></div>}
                         <div><button className="btn" onClick={this.returnToQuestion}>חזרה לשאלה</button></div>
-                    </div>}
+                    </div>
+                }
                 {this.state.show==="feedback" && 
-                    <div className="center">
-                        <div className="feedback">{this.state.feedback}</div>
+                    <div className={"center fullBGSize "+(this.state.bCorrectAnswer ? "feedbackCorrectAnswer" : "feedbackIncorrectAnswer")}>
+                        <div className={this.state.bCorrectAnswer ? "happySmile" : "sadSmile"}></div>
+                        <div className="feedback">
+                        {
+                            this.state.feedback.split("||").map ((itm,ii)=>
+                                    <div key={ii}>{itm}</div>
+                            )
+                        }
+                        </div>
                         <div><button className="btn" onClick={this.returnToQuestion}>{this.state.bCorrectAnswer ? "השאלה הבאה" : "חזרה לשאלה"}</button></div>
                     </div>}
             </div>
@@ -60,7 +75,8 @@ export default class Questions extends React.Component{
     }
     answer(){
         if (helper.trim(document.querySelector(".answer").value)==="")return;
-        if (helper.trim(document.querySelector(".answer").value)===helper.trim(this.state.questions[this.state.current].answer)){
+        const arAnswers=this.state.questions[this.state.current].answer.split("||").map((answer,ii)=>answer.trim());
+        if (arAnswers.includes(helper.trim(document.querySelector(".answer").value))){
             let feedback=helper.trim(this.state.questions[this.state.current].feedbackAfterCorrectAnswer);
             if (!feedback){
                 feedback="תשובה נכונה";

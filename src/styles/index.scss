@@ -18,7 +18,7 @@ body,html {
     width:100vw;
     height:100vh;
     display:flex;
-    padding:2em;
+    padding:20vh 0;
     box-sizing:border-box;
     flex-direction:column;
     justify-content: space-around;
@@ -26,10 +26,62 @@ body,html {
 }
 .btn{
     font-size:1.2em;
-    color:blue;
-    background-color:yellow;
+    padding:0.3em 0.6em;
+    color:white;
+    background-color:#fe0000;
+    margin:0.5em;
 }
 .msg,.question,.hint,.feedback{
-    color: $color-purple;
+    color: $color-black;
+    font-size:1.3em;
+}
+.msg,.question,.hint{
+    margin:0.5em;
+}
+.feedback{
+    margin:0 0.5em 0.5em 0.5em;
+}
+.answer{
     font-size:2em;
+    width:80vw;
+}
+.centerMe{
+    text-align:center;
+}
+.questionWrapper,.hintWrapper{
+    background-image:url(https://storage.googleapis.com/treasurehuntsite/build/images/screen_b.jpg);
+}
+.runningMessagesWrapper{
+    background-image:url(https://storage.googleapis.com/treasurehuntsite/build/images/screen_y.jpg);
+}
+.feedbackCorrectAnswer{
+    background-image:url(https://storage.googleapis.com/treasurehuntsite/build/images/screen_g.jpg);
+}
+.feedbackIncorrectAnswer{
+    background-image:url(https://storage.googleapis.com/treasurehuntsite/build/images/screen_r.jpg);
+}
+.happySmile{
+    background-image:url(https://storage.googleapis.com/treasurehuntsite/build/images/happy_smile.png);
+}
+.sadSmile{
+    background-image:url(https://storage.googleapis.com/treasurehuntsite/build/images/sad_smile.png);
+}
+.happySmile,.sadSmile{
+    width:200px;
+    height:200px;
+    margin:auto;
+}
+.fullBGSize{
+    background-size:100% 100%;
+    height:100vh;
+}
+.bottomMe{
+    margin-top:70vh;
+}
+.hint.img{
+    margin:auto;
+    background-size:100% 100%;
+    width:70vw;
+    height:50vh;
+    border:2px solid black;
 }
