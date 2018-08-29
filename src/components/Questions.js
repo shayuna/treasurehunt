@@ -9,7 +9,7 @@ export default class Questions extends React.Component{
         super(props);
         this.state = {
             questions:[],
-            current:0,
+            current:props.current ? props.current : 0,
             currentHint:-1,
             numberOfWrongAnswers:0,
             show:"question",
@@ -22,6 +22,7 @@ export default class Questions extends React.Component{
     }
     componentDidMount(){
         this.loadData();        
+        this.rememberQuestion(this.state.current);
     }
     loadData(){
         database.ref("questions").orderByChild("questionNum").once("value",snapshot=>{
@@ -47,11 +48,10 @@ export default class Questions extends React.Component{
                     </div>
                     <div className="centerMe"><input type="text" className="answer"/></div>
                     <div>
-                        <button className="btn" onClick={this.answer}>אני אני אני אני</button>
-                        {this.state.numberOfWrongAnswers>1 && <button className="btn" onClick={this.showHint}>מוכן לרמז {this.state.currentHint+1}</button>}
+                        <button className="btn" onClick={this.answer}>יש לי תשובה</button>
                     </div>
                 </div>}
-                {this.state.show==="hint" && 
+                {this.state.show==="hint" &&  
                     <div className="center hintWrapper fullBGSize">
                         {this.state.questions[this.state.current].hints[this.state.currentHint].indexOf("/images/")===-1 && <div className="hint">{this.state.questions[this.state.current].hints[this.state.currentHint]}</div>}
                         {this.state.questions[this.state.current].hints[this.state.currentHint].indexOf("/images/")>-1 && <div className="hint img" style={{backgroundImage:"url("+this.state.questions[this.state.current].hints[this.state.currentHint]+")" }}></div>}
@@ -68,7 +68,8 @@ export default class Questions extends React.Component{
                             )
                         }
                         </div>
-                        <div><button className="btn" onClick={this.returnToQuestion}>{this.state.bCorrectAnswer ? "השאלה הבאה" : "חזרה לשאלה"}</button></div>
+                        {this.state.questions[this.state.current].hints && this.state.numberOfWrongAnswers>1 && !this.state.bCorrectAnswer &&<div><button className="btn" onClick={this.showHint}>אפשר רמז ?</button></div>}
+                        {(!this.state.questions[this.state.current].hints || this.state.numberOfWrongAnswers<=1 || this.state.bCorrectAnswer) && <div><button className="btn" onClick={this.returnToQuestion}>{this.state.bCorrectAnswer ? "השאלה הבאה" : "חזרה לשאלה"}</button></div>}
                     </div>}
             </div>
         )
@@ -82,6 +83,7 @@ export default class Questions extends React.Component{
                 feedback="תשובה נכונה";
             }
             if (this.state.current+1<this.state.questions.length){
+                this.rememberQuestion(this.state.current+1);
                 this.setState(prevState=>({
                     show:"feedback",
                     feedback:feedback,
@@ -103,11 +105,14 @@ export default class Questions extends React.Component{
                 show:"feedback",
                 feedback:feedback,
                 numberOfWrongAnswers:prev.numberOfWrongAnswers+1,
-                currentHint:Math.min(this.state.questions[this.state.current].hints.length,Math.floor((prev.numberOfWrongAnswers+1)/2))-1,
+                currentHint:this.state.questions[this.state.current].hints ? Math.min(this.state.questions[this.state.current].hints.length-1,prev.numberOfWrongAnswers+1 >=2 ? prev.currentHint+1 : -1) : -1,
                 bCorrectAnswer:false                
             }))
         }
         document.querySelector(".answer").value="";
+    }
+    rememberQuestion(iQuestionNum){
+        localStorage.setItem("current",iQuestionNum);
     }
     showHint(){
         this.setState({

@@ -30,15 +30,21 @@ export default class RunningMessages extends React.Component{
         if (this.state.messages[this.state.current] && this.state.messages[this.state.current].indexOf("/images/")===-1){
             return (
                 <div className="center fullBGSize runningMessagesWrapper">
-                    <div className="msg">{this.state.messages[this.state.current]}</div>
-                    {this.state.messages.length>0 && <div><button className="btn" onClick={this.next}>Next Please</button></div>}
+                    <div className="msg">
+                        {
+                            this.state.messages[this.state.current].split("||").map((itm,ii)=>
+                                <div key={ii}>{itm}</div>
+                            )
+                        }
+                    </div>
+                    {this.state.messages.length>0 && !this.props.excludeButton && <div><button className="btn" onClick={this.next}>Next Please</button></div>}
                 </div>
             )
         }
         else if (this.state.messages[this.state.current]){
             return (
                 <div className="center fullBGSize" style={{backgroundImage:"url("+this.state.messages[this.state.current]+")"}}>
-                    {this.state.messages.length>0 && <div><button className="btn bottomMe" onClick={this.next}>Next Please</button></div>}
+                    {this.state.messages.length>0 && !this.props.excludeButton && <div><button className="btn bottomMe" onClick={this.next}>Next Please</button></div>}
                 </div>
             )
         }
