@@ -37,7 +37,7 @@ export default class RunningMessages extends React.Component{
                             )
                         }
                     </div>
-                    {this.state.messages.length>0 && !this.props.excludeButton && <div><button className="btn" onClick={this.next}>Next Please</button></div>}
+                    {this.state.messages.length>0 && !this.props.excludeButton && <div><button className="btn" onClick={this.next}>Next</button></div>}
                 </div>
             )
         }

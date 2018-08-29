@@ -48,14 +48,14 @@ export default class Questions extends React.Component{
                     </div>
                     <div className="centerMe"><input type="text" className="answer"/></div>
                     <div>
-                        <button className="btn" onClick={this.answer}>יש לי תשובה</button>
+                        <button className="btn" onClick={this.answer}>Next</button>
                     </div>
                 </div>}
                 {this.state.show==="hint" &&  
                     <div className="center hintWrapper fullBGSize">
                         {this.state.questions[this.state.current].hints[this.state.currentHint].indexOf("/images/")===-1 && <div className="hint">{this.state.questions[this.state.current].hints[this.state.currentHint]}</div>}
                         {this.state.questions[this.state.current].hints[this.state.currentHint].indexOf("/images/")>-1 && <div className="hint img" style={{backgroundImage:"url("+this.state.questions[this.state.current].hints[this.state.currentHint]+")" }}></div>}
-                        <div><button className="btn" onClick={this.returnToQuestion}>חזרה לשאלה</button></div>
+                        <div><button className="btn" onClick={this.returnToQuestion}>חזרה למשימה</button></div>
                     </div>
                 }
                 {this.state.show==="feedback" && 
@@ -68,8 +68,8 @@ export default class Questions extends React.Component{
                             )
                         }
                         </div>
-                        {this.state.questions[this.state.current].hints && this.state.numberOfWrongAnswers>1 && !this.state.bCorrectAnswer &&<div><button className="btn" onClick={this.showHint}>אפשר רמז ?</button></div>}
-                        {(!this.state.questions[this.state.current].hints || this.state.numberOfWrongAnswers<=1 || this.state.bCorrectAnswer) && <div><button className="btn" onClick={this.returnToQuestion}>{this.state.bCorrectAnswer ? "השאלה הבאה" : "חזרה לשאלה"}</button></div>}
+                        {this.state.questions[this.state.current].hints && this.state.numberOfWrongAnswers>1 && !this.state.bCorrectAnswer &&<div><button className="btn hintBtn" onClick={this.showHint}>{this.state.currentHint===0 ? "אפשר רמז ?" : "אפשר עוד רמז ?"}</button></div>}
+                        {(!this.state.questions[this.state.current].hints || this.state.numberOfWrongAnswers<=1 || this.state.bCorrectAnswer) && <div><button className="btn" onClick={this.returnToQuestion}>{this.state.bCorrectAnswer ? "המשימה הבאה" : "חזרה למשימה"}</button></div>}
                     </div>}
             </div>
         )
@@ -96,6 +96,7 @@ export default class Questions extends React.Component{
             else{
                 this.props.setAppState("epilogue");
             }
+            database.ref("answers_tracking").push({questionNum:this.state.current+1,date_stamp:new Date().toString()});
         }else{
             let feedback=helper.trim(this.state.questions[this.state.current].feedbackAfterIncorrectAnswer);
             if (!feedback){
